@@ -1,0 +1,15 @@
+A1.>Output:
+Child sees i = 0
+Parent sees i = 0
+Child sees i = 1
+Parent sees i = 1
+Child sees i = 2
+Parent sees i = 2
+ 
+A2.>Output:
+Parent says a: 1
+id: 1 a: 2 b: 1
+id: 2 a: 3 b: 1
+
+A3.> A Hybrid thread strives to utilize the best methods found within the user-level and kernel-level implementation. A hybrid thread is often referred to as a two-level scheduler and employs an M:N model whereby M member of user thread map oto N number of kernel threads. This implementation takes advantages of speed and efficiency of user-level threads for thread creation, scheduling, and synchronization, and the capability of kernel-level threads to truly exploit multiple processors. Hybrid threads are typically multiplexed onto a pool of processors. The process pool size is determined by special algorithm in the scheduler/thread library that automatically adapts based on system characteristics such as the number of processors and number of threads. 
+ m (approx) = n will be the best choice.
