@@ -1,0 +1,232 @@
+Q1: Question Answers
+
+1. $cat *.txt > outfile
+2. cd /usr/bin 
+    firefox
+3.grep -v “and” filename 
+4.gzip *dat
+5. ls -a
+6 ls -r
+7. $set or $printenv or $env
+8. sort –r
+9.ln myfile.txt
+10. grap text *
+
+
+Q2 :  Shell Scripts
+1)
+#1.Write a shell script to scan two variables and to display their sum, mul, div, sub and modulo division.
+echo "Enter two numbers"
+read a b
+echo "Functions performed"
+echo "1. Add"
+echo "2. Sub"
+echo "3. Mul"
+echo "4. Div"
+echo $a+$b | bc  #perform addition from bc (calculator)
+echo $a-$b | bc  #perform subtraction from bc (calculator)
+echo $a*$b | bc  #perform multiplication from bc (calculator)
+echo $a/$b | bc  #perform Division from bc (calculator)
+
+2)
+#2.	Write a shell script to perform all Arithmetic Operations using Command line arguments. 
+echo "Enter two numbers"
+echo "Functions performed"
+echo "1. Add"
+echo "2. Sub"
+echo "3. Mul"
+echo "4. Div"
+echo $1+$2 | bc  #perform addition from bc (calculator)
+echo $1-$2 | bc  #perform subtraction from bc (calculator)
+echo $1*$2 | bc  #perform multiplication from bc (calculator)
+echo $1/$2 | bc  #perform Division from bc (calculator)
+
+3)
+#3.	Write a shell script to scan two variables and to display their sum, mul, div, sub and modulo 
+echo "Enter two numbers"
+read a b
+echo "Functions"
+echo "1. Add"
+echo "2. Sub"
+echo "3. Mul"
+echo "4. Div"
+echo "Choose your option"
+read c
+
+case $c in
+	1)
+	echo "Add"
+	echo $a+$b | bc ;; #perform addition from bc (calculator);;
+	
+	2)
+	echo "Sub"
+	echo $a-$b | bc ;; #perform subtraction from bc (calculator)		
+	
+	3)
+	echo "mul"
+	echo $a*$b | bc ;; #perform multiplication from bc (calculator)	
+	
+	4)
+	echo "div"
+	echo $a/$b | bc ;; #perform Division from bc (calculator)
+
+	5)
+	echo "Modulo"
+	echo $a%$b | bc ;; #perform Division from bc (calculator)
+
+	*)
+	echo "Wrong option"s ;;
+	
+	esac #To end the case 
+
+4)
+#4.	Write a shell script to find greatest of two. Script must consider the case where two numbers are equal.
+read a b
+if [ $a -gt $b ]
+	then echo " $a is greater"
+elif [ $b -gt $a ]
+	then echo " $b is greater"
+else echo "same"
+fi
+
+5)
+#5. Write a shell script to accept numbers below 50 and to display the square of each. This should continue as long as the user wishes
+loop=1
+while [ $loop -eq 1 ]
+do
+	echo "Enter a positive number less than 50"
+	read a
+	if [ $a -le 50 -a $a -gt 0 ]
+		 then  
+		 echo $a*$a | bc
+	elif [ $a -gt 50 -o $a -lt 0 ] 
+		 then 
+		 echo "Please input less than 50  and a positive number"
+	elif [ $a -eq 0 ]
+		 then 
+		 loop=0
+	fi
+done
+
+6)
+#6. Write a shell script, which scans the name of the command and executes it.
+loop=1
+while [ $loop -eq 1 ]
+do
+	echo "Enter a command " 
+	read a
+	$a
+	echo " Do you want to continue [1/0] : "
+	read b
+	if [ $b -eq 1 ]
+		then
+		loop=1
+	else
+		loop=0
+	fi
+done
+7)
+#7. Write a shell script which displays January if we enter Jan, Janu, Janua or January.(use of case)
+loop=1
+while [ $loop -eq 1 ]
+do
+	echo "Enter a string:"
+	read a
+	case $a in
+		"Jan")
+		echo "January" ;;
+		
+		"Janu")
+		echo "January" ;;
+		
+		"Janua")
+		echo "January" ;;
+		
+		"January")
+		echo "January" ;;
+		
+		*)
+		echo "Can not understand" ;;
+		
+		esac #To end the case 
+
+	echo " Do you want to continue [1/0] : "
+	read b
+	if [ $b -eq 1 ]
+		then
+		loop=1
+	else
+		loop=0
+	fi
+done
+
+8)
+#8. Write a shell script to generate Fibonacci series.
+
+echo " Enter the number for fib series: " 
+read a
+b=1
+c=1
+d=0
+echo $b
+echo $c	
+while [ $a -ne 0 ]
+do
+	d=`expr $b + $c`
+	b=$c
+	c=$d
+	echo $d
+	a=`expr $a - 1`
+done
+		
+9)
+#9. Write a shell script that asks the capital of Gujarat and repeats the question until the user gives correct answer.
+loop=1
+while [ $loop = 1 ]
+do
+	echo " What is the capital of gujarat [Samllcase] :"
+	read a	
+	if [ "$a" == 'ahmedabad' ]
+		then
+			echo 'Correct'
+			loop=0
+	elif [ "$a" == 'amdavad' ]
+		then
+			echo 'Correct'
+			loop=0
+	else 
+			echo 'Wrong'
+	fi
+done
+	
+	
+10)
+#10. Write a shell script program to search whether element is present in the list or not and also display its position in the list. 
+echo “Enter total no of elements”
+read n
+i=0
+echo “Enter the elements”
+while [ $i -lt $n ]
+do
+	read a[i]
+	i=`expr $i + 1`
+done
+echo ” Enter the element to search”
+read k
+j=0
+flag=0
+while [ $j -lt $n ]
+do 
+	if [ $k -eq ${a[j]} ]
+		then
+			flag=1
+			break	
+	fi
+	j=`expr $j + 1`
+done
+if [ $flag -eq 1 ]
+	then
+		echo “number is found at `expr $j + 1` position”
+	else 
+		echo ” Element is not found”
+fi
