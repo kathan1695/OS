@@ -1,0 +1,145 @@
+Lab 4 
+Done with:
+1) Param Trivedi
+2) Varsh Thaker
+
+4_1)
+# Write a shell script to accept numbers below 50 and to display the square of each. This should continue as long as the user wishes
+loop=1
+while [ $loop -eq 1 ]
+do
+	echo "Enter a positive number less than 50"
+	read a
+	if [ $a -le 50 -a $a -gt 0 ]
+		 then  
+		 echo $a*$a | bc
+	elif [ $a -gt 50 -o $a -lt 0 ] 
+		 then 
+		 echo "Please input less than 50  and a positive number"
+	elif [ $a -eq 0 ]
+		 then 
+		 loop=0
+	fi
+done
+
+4_2) 
+#Write a shell script to check whether the scanned string is found in a file or not. Display appropriate message.
+echo "Enter a string";
+read a;
+b= grep $a Somefile.txt;
+if [ $? -eq 0 ]
+	then
+	echo "Word  found"
+else
+	echo "Not Successful"
+fi
+ 
+4_3)
+#Calculate the sum of n numbers
+echo "Enter n: ";
+read n;
+ans=`expr \( $n \* \( $n + 1 \) \) \/ 2`;
+echo $ans;
+
+4_4)
+#Write a shell script to check whether the entered number is prime or not
+
+echo "Enter a positive number"
+read a
+z=`factor $a|wc -w`; 
+if [ $z -eq 2 ]
+then echo "Prime number"
+else echo "Not a prime"
+fi
+
+4_5)
+#Write a shell script to calculate HRA of employees depending upon their basic
+echo "Enter Basic Salary"
+read salary
+echo "Enter Percentage:"
+read p
+hra=$(( (salary * p)/100 ))
+echo "The HRA is : $hra"
+
+4_6)
+# 6 Write a shell script that greets the user by saying Good Morning, Good Afternoon, and Good Evening according to the system time.
+
+#!/bin/bash
+t=`echo $(date +"%H") `
+d=`echo $(date +"%D") `
+
+if [ $t -le 10 -a $t -ge  6 ]
+ then
+  echo " Good morning $d"
+elif [ $t -gt 10 -a $t -le 16 ]
+ then 
+ echo " good after noon $d"
+elif [ $t -gt 16 -a $t -le 20 ]
+ then 
+ echo "good evening $d"
+elif [ $t -gt 20 -a $t -le 5 ]
+ then
+ echo " good night $d"
+fi
+
+
+
+4_7)
+#Write a shell script, which takes a filename as command line argument, asks the user if he wants to revoke the read, write permissions for the group and others for that particular file. If the answer is “y” then it should do so or else it should abort the operation.
+loop=1
+while [ $loop -eq 1 ]
+do
+	echo "Enter a filename: "	
+	read $1
+	echo "Permissioons are :"
+	ls -l $1
+	echo " Do you want to revoke read and write conditions from the file (y/n)"		   
+	read b
+	if [ "$b" = "y" ]
+		then chmod -rw echo $1
+		     echo "After revoking"	
+		     ls -l $1
+		     echo "Do you wish to continue (y/n):"
+		     read d
+		     if [ "$d" = "y"  ]
+			then loop=1
+		     else loop=0
+		     fi
+	elif [ "$b" = "n" ] 
+		then    echo "Do you wish to continue (y/n):"
+			read c
+			if [ "$c" = "y"  ]
+				then loop=1
+			else loop=0
+			fi
+	else	echo "none of the above conditions meet"
+		loop=0
+	
+	fi
+done
+
+
+
+4_8)
+#Write a shell script to count number of newline characters in a file.
+echo "Enter the name oof file"
+read a
+echo "The new-line count is:"
+wc -l $a
+
+4_9)
+# Write a shell script to count number of spaces in a file
+
+echo enter the filename 
+read fname
+
+n=`cut -d' ' -f 1- $fname | tr ' ' '\n' | wc -l |cut -d' ' -f1 `
+echo $(( n - 1))
+
+
+4_10)
+#Write a Shell script, which counts the number of words in a file, without taking intoconsideration the blank space, tab spaces and the newline characters using WC.
+echo "Enter the filname: "
+read a
+echo "The number of words in $a are:"
+wc -w $a
