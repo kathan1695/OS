@@ -1,0 +1,23 @@
+1> echo $1 | rev
+
+2> if [ "$1" == `echo $1 | rev` ]
+   then 
+      echo "pal"
+   else 
+      echo "not pal"
+   fi
+
+3> yes $1 | head -n $2
+
+4> ls -S | head -n 1
+
+5> cat $1 >> $2
+
+6> if [ $1 -gt 0 ]
+    then 
+      echo `expr \( $1 \* \( $1 + 1 \) \) \/ 2`;
+    else echo "1275"
+    fi
+
+7> star="*"
+  ls $1$star
