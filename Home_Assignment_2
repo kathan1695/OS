@@ -1,0 +1,128 @@
+Ans.1
+For given scenario:
+Examples of events that can cause each of above transitions:
+-	Ready to Run occurs only if a process is allocated the CPU by dispatcher
+-	Run to Ready can be caused by time-quantum expiration
+-	Ready to Nonresident occurs if memory is overcommitted and a process is temporarily swapped out of memory
+-	Run to Blocked can occur If a process issues an I/O or other kernel request
+-	Blocked to Ready occurs if the awaited event completes(perhaps I/O completion)
+-	Blocked to Nonresident is same as Ready to Nonresident
+
+
+Ans.2
+Time		Event
+5 	:	P1 execute command to read from disk unit 3
+15	:	P5’s time slice expires
+18	:	P2 executes command to write to disk unit 3
+20	:	P3 executes cmd to read from disk unit 2
+
+At time 22: 
+P1	:	Blocked for I/O
+P2	: 	Blocked for I/O
+P3	:	Blocked for I/O
+P4	:	Ready/Running
+P5	:	Ready/Running
+
+Time		Event
+24	:	P5 executes command to disk unit 3
+28	:	P5 is swapped out
+33	:	Interrupt occurs from disk 2 and P3’s read complete.
+36	:	Interrupt occurs from disk 3 and P1’s read complete.
+
+At time 37:
+P1	:	Ready/Running 
+P2	: 	Ready/Running 
+P3	:	Blocked Suspended
+P4	:	Blocked for I/O
+P5	:	Ready/Running
+
+Time		Event
+38	:	P8 terminates
+40	:	Interrupt for disk 3 and P5’s write complete
+44	:	P5 is swapped back in
+48	:	Interrupt from disk 3 P7’s write complete
+
+At time 47:
+P1	:	Ready/Running 
+P2	: 	Ready/Running 
+P3	:	Ready/Suspended
+P4	:	Blocked for I/O
+P5	:	exits
+
+Ans.3
+Main()
+{
+	Int pid;
+	Pid =fork();
+	Printf(“%d\n”,pid);
+}
+
+On success the PID of child process is returned in parent’s thread of execution and ‘o’ is returned in child’s thread of execution
+
+Output: 	0	          OR	<child PID>
+	      <child PID>		        0
+
+Ans.4
+Made switch between threads may be cheaper than o mode switch betwee processes
+-	Switching process requires OS to process more information
+-	Memory is shared by threads so there’s no need to exchange memory or data during thread creation or switching
+-	Thread switching does not require kernel to get involved, which in turn saves time on switching user to kernel mode
+
+
+Ans.5
+List three advantages of ULTs over KLTs
+-Thread switching does not require kernel mode privileges because all the thread management data structures are within the user address space of a single process. This saves the overhead of two mode switches(user to kernel, kernel back to user)
+-Scheduling can be application specific. The scheduling algorithm can be tailored to the application without disturbing the underlying OS schedules.
+-ULTs can run on any OS. No changes are required to the underlying kernel to support ULTs. The thread library is a set of application level function shared by all applications.
+
+
+Ans.6 
+Two disadvantages of ULTs over KLTs 
+-In a typical OS, many system calls are blocking when a ULT executes a system call not only is that thread blocked but also all of the threads within the process are blocked.
+-In a pure ULT strategy, a multi-threaded application cannot take advantages of multiprocessing. A kernel assigns one process to only one processor at a time. Therefore, only a single thread within a process can execute at a time.
+
+
+Ans.7
+Q-6 answer point-1 why so?
+- ULT thread structure of a process is not visible to OS/kernel. which schedules on the basiss of processes. According to book: "The kernel continues to schedule the process and assigns aa single execution state (Ready,Running,Blocked,etc...) to that Process"
+- Hence, once a thread is blocked, the whole process is blocked and consequently all thread in that process are blocked.
+
+
+Ans.8
+One to one mapping between ULT-KLT that allows one or more threads within a process to issue blocking system calls while others continue to run.
+-because KLT in multi threaded program enables atleast one thread to issue a block system call independently without influencing other threads to uninterruptly continue with their execution. However, in singlee threaded counterprts of multi-threaded program. machine generally spends a significant amount of time waiting for I/O operation to be complete
+
+
+Ans.9
+If a process exists then all the threads of that process will also stop running.
+
+
+Ans.10
+Competing Process	                                                                            -  Cooperating Process
+Competing process is the process which does its work independent of any other process present.-	Cooperating process is the one which does its work in accordance with the other present processes.
+This process would compete for the resources.                                                 -	This process would share the resources with some other process and at times even complete a task together with other processes.
+There is a careful isolation done among all the processes.                                    -	The processes are made to communicate and share with each other.
+
+
+Ans.11 
+Strong Semaphore	                                                                           - Weak Semaphore
+It specifies the order in which the processes should be removed from the waiting queue.	     - It does not specify the order from which the process should be removed from the waiting queue.
+Mostly used by all the Operating System	                                                     -  Rarely used by any operating system
+
+
+Ans.12	
+Monitor is a synchronization construct that allows the threads to wait for some event to occur and assure mutual exclusion between them. It is helpful for multiprogramming. With the help of monitors only one thread will be executed at a time.
+
+
+Ans.13
+Blocking send, blocking receive: Both the sender and receiver are blocked until the message is delivered.
+Nonblocking send, blocking receive: Although the sender may continue on, the receiver is blocked until the requested message arrives. A process that must receive a message before it can do useful work needs to be blocked until such a message arrives. An example is a server process that facilitates a service or resource to other processes.
+Nonblocking send, nonblocking receive: Neither party is required to wait.
+
+
+Ans.14	
+False. Although Busy waiting wastes instruction cycles, they can be more efficient if the expected wait time is shorter than the time it takes to preempt and re-schedule a thread. This is common on multiprocessors.
+
+
+Ans.15	
+Yes. They can be substituted. Its just that the negative value gives the count of waiting processes.
